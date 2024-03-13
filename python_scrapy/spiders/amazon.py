@@ -1,5 +1,5 @@
 import scrapy
-
+import pandas as pd
 
 class AmazonSpider(scrapy.Spider):
     name = "amazon"
@@ -12,8 +12,12 @@ class AmazonSpider(scrapy.Spider):
 
     def __init__(self):
         self.page_count = 0  # Initialize page count
+        self.watch_brand = []
+        self.watch_price = []
+        self.watch_discount = []
 
     def parse(self, response):
+
         self.page_count += 1
 
         products = response.xpath("//div[@data-component-type='s-search-result']")
@@ -22,6 +26,7 @@ class AmazonSpider(scrapy.Spider):
             brand = product.xpath(".//div/h2/span/text()").get()
             price = product.xpath(".//span[@class='a-price-whole']/text()").get()
             discount = product.xpath(".//span[contains(text(), 'off')]/text()").get()
+
 
             yield {
                 "Brand": brand.strip() if brand else None,
@@ -32,3 +37,15 @@ class AmazonSpider(scrapy.Spider):
             next_page_url = response.xpath("//div/div/span/a[@class='s-pagination-item s-pagination-next s-pagination-button s-pagination-separator']/@href").get()
             if next_page_url and self.page_count < 4:
                 yield response.follow(next_page_url, callback=self.parse)
+
+    def closed(self, reason):
+        print("Spider closed. Reason:", reason)
+        df = pd.DataFrame({"Brand": self.watch_brand, "Price": self.watch_price, "Discount": self.watch_discount})
+        print(df)
+        try:
+            df.to_excel("scrapy_amazon.xlsx")
+            print("Excel file written successfully.")
+        except Exception as e:
+            print("Error writing Excel file:", e)
+
+
