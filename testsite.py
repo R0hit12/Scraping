@@ -1,67 +1,45 @@
 from selenium import webdriver
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from time import sleep
 
+
 driver = webdriver.Chrome()
-driver.get("https://demoqa.com/")
-sleep(2)
-elem = driver.get("https://demoqa.com/elements")
-sleep(2)
-# new_elem = driver.find_element(By.ID,'item-0')
-# new_elem.click()
-#
-# form = driver.find_element(By.ID,"userForm")
-# driver.execute_script("arguments[0].scrollIntoView();", form.find_element(By.ID, "submit"))
-#
-# # new_elem.find_element(By.ID,"userName")
-# uname = form.find_element(By.ID,"userName")
-# uemail = form.find_element(By.ID,'userEmail')
-# caddress = form.find_element(By.ID,'currentAddress')
-# paddress = form.find_element(By.ID,'permanentAddress')
-# submit_button = form.find_element(By.ID,'submit')
-# uname.send_keys("Rohit")
-# uemail.send_keys("test1@gmail.com")
-# caddress.send_keys('New delhi 1234 house')
-# paddress.send_keys('Shimla 176110 pin code')
-# sleep(2)
-# driver.execute_script("window.scrollTo(0, 800)")
-# submit_button.click()
-#
-# sleep(15)
+# Open Zillow website
+driver.get("https://www.zillow.com/homes/")
 
+# Sleep for 120 seconds to allow time for manual interaction (solve captcha)
+sleep(120)
 
-# CHECKBOX
+captcha_container = By.XPATH("//*[@id='px-captcha-wrapper']/div")
 
-checkbox = driver.find_element(By.ID,'item-1')
-checkbox.click()
-drop_down = driver.find_element(By.XPATH,'//*[@id="tree-node"]/ol/li/span/button')
-driver.execute_script("window.scrollTo(0, 400)")
-drop_down.click()
-sleep(5)
-toggle_doc = driver.find_element(By.XPATH,'//*[@id="tree-node"]/ol/li/ol/li[2]/span/button')
-toggle_doc.click()
-sleep(3)
-check_download = driver.find_element(By.XPATH,'//*[@id="tree-node"]/ol/li/ol/li[3]/span/label/span[1]')
-check_download.click()
-sleep(3)
-check_download.click()
-sleep(2)
-collapse_all = driver.find_element(By.XPATH,'//*[@id="tree-node"]/div/button[2]')
-collapse_all.click()
-sleep(5)
+# Find up to 5 iframes containing captcha buttons and click and hold them
+for i in range(1, 6):
+    try:
+        # Locate the captcha button inside iframe
+        button_element = captcha_container.find_element(By.XPATH, f"//*[@id='px-captcha']//iframe[{i}]")
 
-driver.quit()
+        # Switch to the iframe
+        driver.switch_to.frame(button_element)
 
-#RADIO_BUTTON
-# radio_button = driver.find_element(By.ID,'item-2')
-# radio_button.click()
-# driver.execute_script("window.scrollTo(0, 400)")
-# # sleep(5)
-# # driver.execute_script("window.scrollTo(0, 400)")
-# like_button = driver.find_element(By.XPATH,"//label[@for='yesRadio']")
-# like_button.click()
-# sleep(5)
+        # Perform click and hold action
+        action_chains = ActionChains(driver)
+        action_chains.click_and_hold(button_element).perform()
 
+        # Sleep for up to 5 seconds (adjust sleep time as needed)
+        sleep(min(5, 5 - (i - 1)))
+
+        # Release the button
+        action_chains.release().perform()
+
+        # Switch back to the main document
+        driver.switch_to.default_content()
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+# Close the browser session
+# driver.quit()
 
 
