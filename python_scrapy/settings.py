@@ -14,10 +14,16 @@ NEWSPIDER_MODULE = "python_scrapy.spiders"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = "python_scrapy (+http://www.yourdomain.com)"
+# USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
+DOWNLOADER_MIDDLEWARES = {
+    # ... Other middlewares
+    # 'scratest.middlewares.UARotatorMiddleware': 400,
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
+}
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32

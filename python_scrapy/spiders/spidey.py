@@ -12,6 +12,14 @@ class SpideySpider(scrapy.Spider):
         self.page_count = 0  # Initialize page count
         self.book_price = []
 
+    def details(self,response):
+        description = response.xpath("//article/p/text()").get()
+        availability = response.xpath("//tbody/tr[6]/td/text()").get()
+        yield {
+            "Description": description,
+            "Availability": availability
+        }
+
     def parse(self, response):
         # Increment page count
         self.page_count += 1
@@ -30,15 +38,17 @@ class SpideySpider(scrapy.Spider):
                 "Book_link": link,
             }
 
-        print(self.book_title)
-        print("length================", len(self.book_title))
-        print("length========================================",len(book_price))
+            product_link = response.xpath("")
+
+
 
         # Extract URL of the next page
         next_page_url = response.xpath("//li[@class='next']/a/@href").get()
 
-        # If there's a next page and the page count is less than 5, follow the link
-        if next_page_url and self.page_count < 3:
+        if next_page_url and self.page_count<3:
+
+
             yield response.follow(next_page_url, callback=self.parse)
-        print("length================", len(self.book_title))
-        print("length========================================", len(book_price))
+            print("length================", len(self.book_title))
+            print("length===================="
+                  "====================", len(self.book_price))
