@@ -46,20 +46,29 @@
     "Python.all_reviews.executor": "Run",
     "Python.amazon_bs4.executor": "Run",
     "Python.amazon_watches.executor": "Run",
+    "Python.arithmetic_op.executor": "Run",
     "Python.beautifulsoup.executor": "Run",
     "Python.booking.executor": "Run",
     "Python.buttons.executor": "Run",
+    "Python.concatination.executor": "Run",
+    "Python.exercise.executor": "Run",
     "Python.flipkartbs4.executor": "Run",
     "Python.g_maps.executor": "Run",
     "Python.indeed.executor": "Run",
     "Python.indeed_new.executor": "Run",
     "Python.linkedin_scraping.executor": "Run",
     "Python.main.executor": "Run",
+    "Python.numpy_tutorial.executor": "Run",
+    "Python.pandas_tutorial.executor": "Run",
+    "Python.project.executor": "Run",
     "Python.reviews.executor": "Run",
+    "Python.reviews_sorting.executor": "Run",
+    "Python.scrape_site.executor": "Run",
     "Python.scrape_test.executor": "Run",
     "Python.task1.executor": "Run",
     "Python.test.executor": "Run",
     "Python.test1.executor": "Run",
+    "Python.testing.executor": "Run",
     "Python.testsite.executor": "Run",
     "Python.web_tables.executor": "Run",
     "Python.zillow.executor": "Run",
@@ -117,5 +126,16 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/numpy/concatination.py</url>
+          <line>30</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

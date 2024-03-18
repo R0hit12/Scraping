@@ -1,5 +1,6 @@
 import pandas as pd
 from selenium import webdriver
+from seleniumbase import Driver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
