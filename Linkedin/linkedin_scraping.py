@@ -1,6 +1,5 @@
 import pandas as pd
 from selenium import webdriver
-from seleniumbase import Driver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -32,7 +31,10 @@ sleep(4)
 
 
 ul_element = driver.find_element(By.CLASS_NAME,"jobs-search__results-list")
-li_element = ul_element.find_element(By.TAG_NAME,"li")
-t_element = li_element.text
-print(t_element)
-sleep(5)
+li_element = ul_element.find_elements(By.TAG_NAME,"li")
+print(li_element)
+for i in li_element:
+    print(i.text)
+sleep(10)
+
+driver.quit()

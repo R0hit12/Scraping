@@ -11,4 +11,4 @@ print(a[1,3])
 print(np.shape(a))
 print(np.size(a))
 
-print(len(a[1]))
+print(a[1,2:])
